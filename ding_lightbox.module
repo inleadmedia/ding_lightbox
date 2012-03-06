@@ -1,0 +1,42 @@
+<?php
+/**
+ * @file
+ * 
+ * Main module file for ding lightbox.
+ */
+
+define('DING_LIGHTBOX_PATH', drupal_get_path('module', 'ding_lightbox'));
+define('IMAGE_CACHE_PATH', '/sites/default/files/ting/covers/object');
+
+/**
+ * Implements hook_init().
+ */
+function ding_lightbox_init() {
+  drupal_add_js(array('ding_lightbox' => array(
+    'visible_on_landing_page' => variable_get('lightbox_item_landing_page', FALSE),
+    'visible_on_search_page' => variable_get('lightbox_item_search_page', FALSE),
+    'image_cache_path' => IMAGE_CACHE_PATH,
+    'module_path' => DING_LIGHTBOX_PATH,
+  )), 'setting');
+  drupal_add_js(DING_LIGHTBOX_PATH . '/js/lightbox.js', 'file');
+  drupal_add_js(DING_LIGHTBOX_PATH . '/js/lightbox.init.js', 'file');
+  drupal_add_css(DING_LIGHTBOX_PATH . '/css/lightbox.css', 'file');
+}
+
+/**
+ * Implements hook_menu().
+ */
+function ding_lightbox_menu() {
+  $items = array();
+
+  $items['admin/config/ding/lightbox'] = array(
+    'title' => 'Ding lightbox settings',
+    'description' => 'Select pages where lightbox functionality should occur.',
+    'access arguments' => array('access administration pages'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('ding_lightbox_config_form'),
+    'file' => 'ding_lightbox.admin.inc',
+  );
+
+  return $items;
+}

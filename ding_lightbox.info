@@ -1,0 +1,6 @@
+name = Ding lightbox
+description = Provides a popup with a large cover image on various ting related pages.
+package = Ding!
+core = 7.x
+version = 0.1
+configure = admin/config/ding/lightbox
